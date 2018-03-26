@@ -1,0 +1,452 @@
+title YES NO - W I P
+author @theotheralvaro
+homepage www.alvarosalvagno.com
+noaction
+key_repeat_interval 0.15
+throttle_movement
+(noundo)
+
+
+========
+OBJECTS
+========
+
+
+(#e70012)
+
+Background 
+White  
+
+Void 
+black
+
+Target 
+white yellow white
+22122
+21112
+11111
+21112
+21212
+
+
+Wall 
+white blue
+11111
+11011
+10001
+11011
+11111
+
+Lost
+white red
+10001
+01010
+00100
+01010
+10001
+
+
+Player 
+white brown yellow red
+01110
+02320
+11311
+13331
+01110
+
+
+
+Crate 
+WHITE brown
+01110
+11111
+11111
+11111
+01110
+
+
+StickyCrate
+GREEN YELLOW
+00000
+00100
+00100
+00100
+00000
+
+FollowCrate
+white green
+01010
+11111
+01110
+11111
+01010
+
+StaticCrate
+Green
+
+SafeCrate
+purple
+
+transformFollow
+green WHITE
+00000
+01010
+00100
+01010
+00000
+
+transformCrate
+#e2e2c9 white
+00000
+01110
+01110
+01110
+00000
+
+=======
+LEGEND
+=======
+
+
+. = Background
+# = Wall
+P = Player
+C = Crate
+Y = FollowCrate
+S = StickyCrate
+N = StaticCrate
+L = SafeCrate
+T = Target
+$ = Void
+; = transformFollow
+: = transformCrate
+! = transformCrate AND Player
+% = transformFollow AND Player
+AnyCrate = Crate or FollowCrate or StickyCrate or StaticCrate
+
+=======
+
+SOUNDS
+=======
+
+(sounds)
+Player Move 12022504
+AnyCrate Move 38914307 
+Lost Create  14121902
+ShowMessage 25120708
+Undo 98136702
+
+================
+COLLISIONLAYERS
+================
+
+Background
+Target, Lost, Void, transformFollow, transformCrate
+Player, Wall, Crate, StickyCrate, StaticCrate, SafeCrate, FollowCrate
+
+======
+RULES     
+======     
+[Lost] -> RESTART
+[ < Player | Crate ] -> [ < Lost | Lost ] message NO 
+[ > Player | Crate ] -> [  Player | > Crate]
+
+[ > Player | SafeCrate ] -> [  Player | > SafeCrate]
+
+
+[ > Crate | Crate] -> [ Crate | > Crate]
+[ < FollowCrate | Crate ] -> [  < FollowCrate | < Crate  ]
+
+[ > Player |  StickyCrate | StickyCrate] -> [> Player |> StickyCrate | > StickyCrate]
+
+[ > Crate | Player ] -> [ > Crate | > Player ] 
+
+late [ Crate Target ]  -> [ Lost ] message NO 
+
+late [ Crate transformFollow ]  -> [ FollowCrate transformFollow] 
+
+late [ FollowCrate transformCrate ]  -> [ Crate transformCrate]
+
+
+[ > Crate | FollowCrate  ] -> [ Crate | Crate ] 
+[ > Player | StickyCrate ] -> [  > Player | > StickyCrate]
+[ < Player | FollowCrate ] -> [ < Player |  < FollowCrate]
+[ > Player | FollowCrate ] -> [ Lost |  Lost] message NO 
+[ < Player | StaticCrate ] -> [ < Lost | Lost ] message NO 
+
+
+(chain reactions)
+[ < FollowCrate | FollowCrate ] -> [ < FollowCrate | < FollowCrate ]
+[ < FollowCrate | Crate ] -> [ < FollowCrate | < Crate]
+
+
+
+==============
+WINCONDITIONS
+==============
+
+Some Player on Target
+No Lost
+
+
+=======     
+LEVELS
+=======
+
+(###############
+. = Background
+# = Wall
+P = Player
+C = Crate
+Y = FollowCrate
+S = StickyCrate
+N = StaticCrate
+L = SafeCrate
+T = Target
+$ = Void
+; = transformFollow
+: = transformCrate
+! = transforCrateANDplayer
+#################)
+
+
+
+
+(
+(base level template)
+#######
+#.....#
+#.P.T.#
+#.....#
+#######
+)
+
+
+message 
+message YES
+message 
+message NO
+message
+
+
+#######
+#.....#
+#.P.T.#
+#.....#
+#######
+
+
+
+
+message YES
+
+
+#######
+#.#...#
+#p.c.t#
+#.#...#
+#######
+
+message YES
+
+$$$$$$$$$$$$
+###########$
+#..#####..#$
+#.cp.....t#$
+#..#####..#$
+###########$
+$$$$$$$$$$$$
+
+
+message YES
+
+$$$$$$$$$$$$$
+############$
+#...#####..#$
+#.c.......t#$
+#...#####..#$
+###.########$
+$$#.#$$$$$$$$
+$$#p#$$$$$$$$
+$$###$$$$$$$$
+
+
+message YES
+
+######
+#....#
+#.pc.#
+#.c.t#
+######
+
+
+message YES
+
+#############
+#p..c...c..t#
+###...#...###
+#############
+
+
+message YES
+
+
+
+$$$$$$#####
+$$$$$$#.t.#
+$$$$$$#...#
+$$$$$$#c.c#
+#######.c##
+#..c.c....#
+#cp.C######
+#..c#######
+###########
+
+message YES
+(
+###########
+#.####....#
+#TPS....C.#
+#.####....#
+###########
+
+
+message YES
+
+(introduction to dangerous walls)
+
+nnnnnnnn
+n......n
+n.p..t.n
+n......n
+nnnnnnnn
+
+message YES
+)
+
+
+
+
+##########
+#....#...#
+#...##...#
+#.p..y.t.#
+#...##...#
+#....#...#
+##########
+
+message YES
+$$########$
+$#....#...#
+$#...##...#
+#y..pyyyt.#
+$#...##...#
+$#....#...#
+$$########$
+
+
+message YES
+(interesting box puzzle)
+#####
+#...#
+#.y.#
+#.p.#
+#...#
+#yyy#
+#...#
+#yyy#
+#.t.#
+#####
+
+
+message YES
+
+(box + sticky basic puzzle)
+$########
+$#....###
+$#.p.yct#
+$#....###
+$########
+
+
+message YES
+
+(box + sticky, harder)
+$$$$#$$$
+####;###
+#....###
+#pc.cct#
+#....###
+########
+
+
+message YES
+(teaching transform into rock)
+#######
+#######
+###.###
+###y###
+##pct##
+##..###
+#######
+#######
+
+(more than one player)
+########
+#t.....#
+#..c#cc#
+#c.p#.p#
+########
+
+
+
+(another two player puzzle idea with boulders)
+########
+#......#
+#.pcc.c#
+#.c..t.#
+#.pc.c.#
+#...c.##
+########
+
+
+(more than one player, tutorial + challenge)
+#####$$
+#...#$$
+#cpt#$$
+#.p.#$$
+#####$$
+
+
+(2 player push simple)
+########
+#...c..#
+#p.c..t#
+#p..cc.#
+########
+
+
+(2 players movement simple)
+#######
+#....c#
+#cptpc#
+#c....#
+#######
+
+(3 char tutorial)
+#######
+##.####
+#.p...#
+#cp.t.#
+#.p...#
+##.####
+#######
+
+(two rocks, two players)
+#####
+#...#
+#p.p#
+#c.c#
+#;.;#
+#.t.#
+#####
